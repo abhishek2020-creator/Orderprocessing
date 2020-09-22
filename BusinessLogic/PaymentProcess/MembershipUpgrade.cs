@@ -7,16 +7,16 @@ using System.Text;
 
 namespace BusinessLogic.PaymentProcess
 {
-    // If the payment is for a membership, activate that membership.
+    // If the payment is an upgrade to a membership, apply the upgrade.
     // If the payment is for a membership or upgrade, e-mail the owner and inform them of the activation/upgrade.
-    public class MembershipActivate : IPaymentProcess
+    public class MembershipUpgrade : IPaymentProcess
     {
-        private IRepositories _service;
+        private IRepositories _repo;
         private INotificationServices _notificationService;
 
-        public MembershipActivate(IRepositories service, INotificationServices notificationService)
+        public MembershipUpgrade(IRepositories repo, INotificationServices notificationService)
         {
-            _service = service;
+            _repo = repo;
             _notificationService = notificationService;
         }
 
@@ -24,15 +24,16 @@ namespace BusinessLogic.PaymentProcess
         public void run(Payment payment)
         {
             Order order = payment.getOrder();
-            LineItem[] lineItems = order.getLineItems();
             Customer customer = order.getCustomer();
+            LineItem[] lineItems = order.getLineItems();
             foreach (LineItem lineItem in lineItems)
             {
                 if (!lineItem.hasCategory(ProductCategory.Membership))
                     continue;
 
-                Membership membership = _service.findByProduct(lineItem.getProduct());
-                if (membership != null)
+                Membership membership = _repo.findByProduct(lineItem.getProduct());
+                Membership previousLevel = membership.getPreviousLevel();
+                if (customer.hasMembership(previousLevel))
                     customer.addMembership(membership, _notificationService);
             }
         }

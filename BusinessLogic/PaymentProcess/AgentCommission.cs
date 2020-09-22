@@ -6,6 +6,7 @@ using System.Text;
 
 namespace BusinessLogic.PaymentProcess
 {
+    // If the payment is for a physical product or a book, generate a commission payment to the agent.
     public class AgentCommissionHandler : IPaymentProcess
     {
         public void run(Payment payment)
