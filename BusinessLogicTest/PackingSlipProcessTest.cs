@@ -13,7 +13,7 @@ namespace BusinessLogicTest
 {
     public class PackingSlipProcessTest
     {
-        private Mock<Customer> _mockCustomer;
+        private Mock<ICustomer> _mockCustomer;
         private Mock<IPackingSlipServices> _PackingSlipServices;
         private Mock<IShippingServices> _ShippingServices;
         private Mock<IRoyaltyServices> _RoyaltyServices;
@@ -21,7 +21,7 @@ namespace BusinessLogicTest
         [OneTimeSetUp]
         public void Setup()
         {
-            _mockCustomer = new Mock<Customer>(MockBehavior.Loose);
+            _mockCustomer = new Mock<ICustomer>(MockBehavior.Loose);
             _PackingSlipServices = new Mock<IPackingSlipServices>(MockBehavior.Loose);
             _ShippingServices = new Mock<IShippingServices>(MockBehavior.Loose);
             _RoyaltyServices = new Mock<IRoyaltyServices>(MockBehavior.Loose);

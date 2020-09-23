@@ -5,7 +5,7 @@ using System.Text;
 
 namespace BusinessLogic.Domain
 {
-    public class Customer
+    public class Customer : ICustomer
     {
         public void addMembership(Membership membership, INotificationServices notificationService)
         {

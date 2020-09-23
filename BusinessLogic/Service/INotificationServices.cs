@@ -7,6 +7,6 @@ namespace BusinessLogic.Service
 {
     public interface INotificationServices
     {
-        void notify(Customer customer, Membership membership);
+        void notify(ICustomer customer, Membership membership);
     }
 }

@@ -8,11 +8,11 @@ namespace BusinessLogic.Domain
 {
     public class Order
     {
-        private Customer _customer;
+        private ICustomer _customer;
         private LineItem[] _lineItems;
         private Agent _agent;
         private HashSet<String> _giftproduct;
-        public Order(Customer customer, LineItem[] lineItems, Agent agent)
+        public Order(ICustomer customer, LineItem[] lineItems, Agent agent)
         {
             if (lineItems == null || lineItems.Count() == 0)
                 throw new ArgumentException("line items are required");
@@ -23,7 +23,7 @@ namespace BusinessLogic.Domain
         }
 
 
-        public Customer getCustomer()
+        public ICustomer getCustomer()
         {
             return _customer;
         }

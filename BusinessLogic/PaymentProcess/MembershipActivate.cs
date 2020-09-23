@@ -25,7 +25,7 @@ namespace BusinessLogic.PaymentProcess
         {
             Order order = payment.getOrder();
             LineItem[] lineItems = order.getLineItems();
-            Customer customer = order.getCustomer();
+            ICustomer customer = order.getCustomer();
             foreach (LineItem lineItem in lineItems)
             {
                 if (!lineItem.hasCategory(ProductCategory.Membership))

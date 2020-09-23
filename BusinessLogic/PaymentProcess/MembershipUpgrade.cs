@@ -24,7 +24,7 @@ namespace BusinessLogic.PaymentProcess
         public void run(Payment payment)
         {
             Order order = payment.getOrder();
-            Customer customer = order.getCustomer();
+            ICustomer customer = order.getCustomer();
             LineItem[] lineItems = order.getLineItems();
             foreach (LineItem lineItem in lineItems)
             {

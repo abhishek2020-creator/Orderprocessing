@@ -14,10 +14,11 @@ namespace BusinessLogicTest
     public class MembershipUpgradeTest
     {
         private Mock<Customer> _mockCustomer;
-  
+
         private Mock<IRepositories> _Repositories;
         private Mock<INotificationServices> _NotificationServices;
         private Mock<Customer> _mockCustomerSpy;
+        private Mock<ICustomer> _mockICustomer;
 
         [OneTimeSetUp]
         public void Setup()
@@ -26,6 +27,7 @@ namespace BusinessLogicTest
             _Repositories = new Mock<IRepositories>(MockBehavior.Loose);
             _mockCustomerSpy = new Mock<Customer>(MockBehavior.Loose);
             _NotificationServices = new Mock<INotificationServices>(MockBehavior.Loose);
+            _mockICustomer = new Mock<ICustomer>(MockBehavior.Loose);
         }
 
         [Test]
@@ -41,23 +43,23 @@ namespace BusinessLogicTest
                     ProductCategory.Membership
                 })
             };
-                Customer customer = _mockCustomer.Object;
-                _mockCustomer.SetupSequence(m => m.hasMembership(membershipSilver)).Returns(true);
+                ICustomer customer = _mockICustomer.Object;
+                _mockICustomer.Setup(m => m.hasMembership(membershipSilver)).Returns(true);
                 Order order = new Order(customer, lineItems, null);
                 Payment payment = new Payment(order);
 
                 IRepositories repo = _Repositories.Object;
-                _Repositories.SetupSequence(m => m.findByProduct(membershipGold.getProduct())).Returns(membershipGold);
+                _Repositories.Setup(m => m.findByProduct(membershipGold.getProduct())).Returns(membershipGold);
 
                 INotificationServices notificationService = _NotificationServices.Object;
                 IPaymentProcess sut = new MembershipUpgrade(repo, notificationService);
                 sut.run(payment);
 
-                _mockCustomer.Verify(m => m.addMembership(membershipGold, notificationService), Times.Once());
+                _mockICustomer.Verify(m => m.addMembership(membershipGold, notificationService), Times.Once());
             }
-            catch
+            catch (Exception ex)
             {
-                throw;
+                throw ex;
             }
         }
 
@@ -75,8 +77,8 @@ namespace BusinessLogicTest
                 ProductCategory.Membership
             })
             };
-                Customer customer = _mockCustomerSpy.Object;
-                _mockCustomerSpy.SetupSequence(m => m.hasMembership(membershipSilver)).Returns(true);
+                ICustomer customer = _mockICustomer.Object;
+                _mockICustomer.SetupSequence(m => m.hasMembership(membershipSilver)).Returns(true);
                 Order order = new Order(customer, lineItems, null);
                 Payment payment = new Payment(order);
 
