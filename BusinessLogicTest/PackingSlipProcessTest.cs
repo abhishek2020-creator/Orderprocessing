@@ -21,10 +21,10 @@ namespace BusinessLogicTest
         [OneTimeSetUp]
         public void Setup()
         {
-            _mockCustomer = new Mock<Customer>(MockBehavior.Strict);
-            _PackingSlipServices = new Mock<IPackingSlipServices>(MockBehavior.Strict);
-            _ShippingServices = new Mock<IShippingServices>(MockBehavior.Strict);
-            _RoyaltyServices = new Mock<IRoyaltyServices>(MockBehavior.Strict);
+            _mockCustomer = new Mock<Customer>(MockBehavior.Loose);
+            _PackingSlipServices = new Mock<IPackingSlipServices>(MockBehavior.Loose);
+            _ShippingServices = new Mock<IShippingServices>(MockBehavior.Loose);
+            _RoyaltyServices = new Mock<IRoyaltyServices>(MockBehavior.Loose);
         }
 
 
@@ -97,8 +97,6 @@ namespace BusinessLogicTest
         {
             try
             {
-
-
                 LineItem[]
                 lineItems = new LineItem[]{
             new LineItem("item1", "item1", new ProductCategory[]{
