@@ -9,7 +9,7 @@ namespace BusinessLogic.PaymentProcess
     // If the payment is for a physical product, generate a packing slip for shipping.
     // If the payment is for a book, create a duplicate packing slip for the royalty department.
     // if the payment is for the video “Learning to Ski,” add a free “First Aid” video to the packing slip
-    public class PackingSlipProcess
+    public class PackingSlipProcess: IPaymentProcess
     {
 
 
